@@ -74,8 +74,6 @@ impl Build {
         fs::create_dir_all(&inner_dir).unwrap();
         cp_r(&source_dir(), &inner_dir);
 
-        // Generate configuration here...
-
         let mut ios_isysroot: std::option::Option<String> = None;
         let mut build = self.cmd_make();
 
@@ -160,6 +158,10 @@ impl Build {
             build.env("CROSS_SDK", components[1]);
         }
 
+	// before building, update config.h
+        #[cfg(feature = "sgx")]
+	self.generate_config(&inner_dir); 
+
         self.run_command(build, "building mbedtls");
 
         let mut install = self.cmd_make();
@@ -180,6 +182,15 @@ impl Build {
             include_dir: install_dir.join("include"),
             libs: libs,
         }
+    }
+
+    #[cfg(feature = "sgx")]
+    fn generate_config(&self, inner_dir: &PathBuf) {
+        let curr = &env::var("CARGO_MANIFEST_DIR").unwrap();
+        let root_dir = Path::new(curr).parent().unwrap();
+        let file = root_dir.join("src").join("config.h");
+        let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
+        let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
     }
 
     fn run_command(&self, mut command: Command, desc: &str) {
