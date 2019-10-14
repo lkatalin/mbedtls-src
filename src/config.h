@@ -92,7 +92,7 @@
 #define MBEDTLS_DHM_C
 #define MBEDTLS_ECDH_C
 #define MBEDTLS_ECDSA_C
-#define MBEDTLS_ECJPAKE_C
+/*#define MBEDTLS_ECJPAKE_C*/
 #define MBEDTLS_ECP_C
 #define MBEDTLS_ERROR_C
 #define MBEDTLS_GCM_C
