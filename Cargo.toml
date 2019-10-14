@@ -14,6 +14,7 @@ members = ['testcrate']
 
 [dependencies]
 cc = "1.0"
+sgx-isa = { version = "0.2", features = ["sgxstd"], optional = true }
 
 [features]
-sgx = []
+sgx = ["sgx-isa"]

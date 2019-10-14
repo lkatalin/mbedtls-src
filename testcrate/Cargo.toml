@@ -16,3 +16,4 @@ package = ['tar', 'flate2']
 
 [build-dependencies]
 mbedtls-src = { path = "..", features = ["sgx"] }
+sgx-isa = { version = "0.2", features = ["sgxstd"] }
