@@ -191,9 +191,9 @@ impl Build {
         let curr = &env::var("CARGO_MANIFEST_DIR").unwrap();
 	println!("CARGO_MANIFEST_DIR is {}", curr);
         let root_dir = Path::new(curr).parent().unwrap();
-        //let file = root_dir.join("src").join("config.h");
-        //let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
-        //let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
+        let file = root_dir.join("src").join("config.h");
+        let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
+        let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
     }
 
     fn run_command(&self, mut command: Command, desc: &str) {
