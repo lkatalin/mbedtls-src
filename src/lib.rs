@@ -190,9 +190,10 @@ impl Build {
 	println!("GENERATE CONFIG WAS CALLED *****************\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         let curr = &env::var("CARGO_MANIFEST_DIR").unwrap();
 	println!("CARGO_MANIFEST_DIR is {}", curr);
-        let root_dir = Path::new(curr).parent().unwrap();
-        let file = root_dir.join("src").join("config.h");
-        let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
+        //let root_dir = Path::new(curr).parent().unwrap();
+        //let file = root_dir.join("src").join("config.h");
+        let file = curr.join("src").join("config.h"); // this line ONLY works when building from the sys crate!
+	let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
         let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
     }
 
