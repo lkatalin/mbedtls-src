@@ -26,6 +26,7 @@ pub struct Artifacts {
 
 impl Build {
     pub fn new() -> Build {
+	println!("BUILD WAS CALLED*************\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Build {
             out_dir: env::var_os("OUT_DIR").map(|s| PathBuf::from(s).join("mbedtls-build")),
             target: env::var("TARGET").ok(),
@@ -186,11 +187,12 @@ impl Build {
 
     #[cfg(feature = "sgx")]
     fn generate_config(&self, inner_dir: &PathBuf) {
+	println!("GENERATE CONFIG WAS CALLED *****************\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         let curr = &env::var("CARGO_MANIFEST_DIR").unwrap();
         let root_dir = Path::new(curr).parent().unwrap();
         let file = root_dir.join("src").join("config.h");
-        let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
         let _ = fs::copy(&file, inner_dir.join("include/mbedtls/config.h")).unwrap();
+        let _ = fs::copy(&file, &inner_dir.join("crypto/include/mbedtls/config.h")).unwrap();
     }
 
     fn run_command(&self, mut command: Command, desc: &str) {
